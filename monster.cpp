@@ -1,13 +1,17 @@
+<<<<<<< HEAD
 #include <iostream>
 using namespace std;
 
 int roadCellAmount=1;//道路格子的总数
 int roadLocation[100][2]={0};//按顺序排列的道路格子位置
 
+=======
+>>>>>>> adbb65f20fe4fc1dda7ededc517c517ed8c4cdb7
 class Monster{
 public:
     int intHitPoint;//怪物的血量
     int arrayLocation[2];//怪物的位置
+<<<<<<< HEAD
 	int monsterMoveSpeed;//怪物的速度
     int locationOrder;//怪物处于第几个道路格子上
     Monster(int blood, int speed){//构造函数
@@ -35,3 +39,6 @@ int main(){
     cout<<"1111111";
     return 0;
 }
+=======
+};
+>>>>>>> adbb65f20fe4fc1dda7ededc517c517ed8c4cdb7
