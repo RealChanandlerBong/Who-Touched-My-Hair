@@ -1,7 +1,112 @@
 #include "monster.cpp"
+#include "tower.cpp"
 class Map{
 public:
-    int intThreatLevel[100];//æ€ªç‰©å¨èƒåº¦
-    Monster* monsterExisted[100];//åœ°å›¾ä¸Šå­˜åœ¨çš„æ€ªç‰©
+    double DistanceToFinal[100];//¹ÖÎïµ½ÖÕµãµÄ¾àÀë/-¹ÖÎïÍşĞ²¶È
+    Monster* monsterExisted[100];//µØÍ¼ÉÏ´æÔÚµÄ¹ÖÎï
     int intMonsterNumbers;
+    Tower* towerExisted[100];//µØÍ¼ÉÏ´æÔÚµÄ¹ÖÎï
+    int intTowerNumbers;
+    int sizex,sizey;
+    char **MapState; //r Â· b ¿Õ  t Ëş 
+    
+    Map(int x=50,int y=30,int roadLocation[][2],int roadlength)
+	{
+		intMonsterNumbers=0;
+		intTowerNumbers=0;
+		sizex=x;
+		sizey=y;
+		MapState= new MapState[x][y];
+		for (int i=0;i<x;i++)
+			for (int j=0;j<y;j++)
+				MapState[i][j]='b'; 
+		for (int i=0;i<roadlength;i++)
+			MapState[roadLocation[i][0]][roadLocation[i][1]];
+	}
+    
+    void ProduceMonster(int MonsterType=0);
+    bool ProduceTower(int TowerType=0,int x,int y);//x y ±íÊ¾Ëş×óÉÏ½Ç×ø±ê 
+    bool MapisOccupied(int x,int y,int towersizex,int towersizey);
+    void MapStateChangeToTower(int x,int y,int towersizex,int towersizey,char newstate);//ĞŞ¸ÄMapStateÎªËş 
+    void Update();//time±íÊ¾µ±Ç°µÄÊ±¼ä£¬µ¥Î»ºÁÃë£¬¸Ãº¯Êı±»timerµ÷ÓÃ£¬ÓÃÒÔ¸üĞÂËşµÄ¹¥»÷CD¼°ÑªÁ¿
+    
+    
 };
+
+void Map::ProduceMonster(int MonsterType=0)
+{
+	switch (MonsterType)
+	{
+		case 0:
+			monsterExisted[intMonsterNumbers]=new Monster(100,1);//0ºÅ¹Ö 100 1
+			break;
+		
+		default:
+			break; 
+	}
+	intMonsterNumbers++;
+}
+
+bool Map::ProduceTower(int TowerType=0,int x,int y)
+{
+	switch (TowerType)
+	{
+		case 0:
+			towerExisted[intTowerNumbers]=new Tower0(x,y);//0ºÅËş 
+			if (MapisOccupied(x,y,towerExisted[intTowerNumbers]->arraySize[0],towerExisted[intTowerNumbers]->arraySize[1])==0)//Î´±»Õ¼ÓÃ ¿ÉÒÔ½¨Ëş 
+			{
+				intTowerNumbers++;
+				MapStateChangeToTower(x,y,towerExisted[intTowerNumbers]->arraySize[0],towerExisted[intTowerNumbers]->arraySize[1],'t');//ĞŞ¸ÄMapState 
+				return true;
+			}	
+			else
+			{
+				delete towerExisted[intTowerNumbers];
+				return false;
+			}
+			break;
+		
+		default:
+			break; 
+	}
+
+}
+
+bool Map::MapisOccupied(int x,int y,int towersizex,int towersizey)
+{
+	for (int i=0;i<towersizex;i++)
+		for (int j=0;j<towersizey;j++)
+			if (MapState[i+x][j+y]!='b')
+				return false;
+	return true;
+}
+
+void Map::MapStateChange(int x,int y,int towersizex,int towersizey,char newstate)
+{
+	for (int i=0;i<towersizex;i++)
+		for (int j=0;j<towersizey;j++)
+			MapState[i+x][j+y]=newstate;
+}
+
+void Map::Update(int time)//timeµÄµ¥Î»ÊÇms 
+{
+	for (int i=0;i<intMonsterNumbers;i++)//ËùÓĞ¹ÖÎïÒÆ¶¯ 
+		DistanceToFinal[i]=monsterExisted[i]->move();
+	for (int i=0;i<intTowerNumbers;i++)//ËùÓĞËş¹¥»÷ 
+		towerExisted[i]->update(time,this);
+	for (int i=0;i<intMonsterNumbers;i++)//ÅĞ¶Ï¹ÖÎïÊÇ·ñËÀÍö ËÀÍöÔòdelete Í¬Ê±Î¬»¤
+	{
+		int newintMonsterNumbers=0;
+		if (monsterExisted[i]->intHitPoint<=0)
+		{
+			delete monsterExisted[i];
+			monsterExisted[i]=nullptr;
+		}
+		else 
+		{
+			monsterExisted[newintMonsterNumbers]=monsterExisted[i];
+			newintMonsterNumbers++;
+		}	
+	}
+	intMonsterNumbers=newintMonsterNumbers; 
+}

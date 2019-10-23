@@ -1,20 +1,20 @@
-//å¡”éœ€è¦ä»åœ°å›¾ä¸­ç´¢å–æ€ªç‰©ä¿¡æ¯ï¼Œå› æ­¤éœ€è¦æ€ªç‰©ç±»å’Œåœ°å›¾ç±»éƒ½å†™å¥½æ‰èƒ½ç»§ç»­è¡¥å……updateå‡½æ•°
+//ËşĞèÒª´ÓµØÍ¼ÖĞË÷È¡¹ÖÎïĞÅÏ¢£¬Òò´ËĞèÒª¹ÖÎïÀàºÍµØÍ¼Àà¶¼Ğ´ºÃ²ÅÄÜ¼ÌĞø²¹³äupdateº¯Êı
 
 #include "monster.cpp"
 #include "map.cpp"
-
+#define doubleThreatLevel[n]=-DistanceToFinal[n];
 
 class Tower{
 public:
-    int arrayLocation[2];//ä½ç½®åæ ‡ï¼Œ[0]ä¸ºxï¼Œ[1]ä¸ºy
-    int intAttackInterval;//æ”»å‡»é—´éš”ï¼Œå•ä½æ¯«ç§’
-    int intAttack;//æ”»å‡»åŠ›
-    int intCost;//ä»·æ ¼
-    int arraySize[2];//å¡”çš„å¤§å°ï¼Œé•¿ä¹˜å®½ï¼Œ[0]ä¸ºæ°´å¹³é•¿åº¦ï¼Œ[1]ä¸ºç«–ç›´é•¿åº¦
-    double doubleAttackRadius;//æ”»å‡»èŒƒå›´ï¼Œé»˜è®¤ä¸ºåœ†å½¢ï¼Œè¯¥å˜é‡ä»£è¡¨åœ†çš„åŠå¾„
-    int intHitPoint;//å¡”çš„å‰©ä½™è¡€é‡
+    int arrayLocation[2];//Î»ÖÃ×ø±ê£¬[0]Îªx£¬[1]Îªy
+    int intAttackInterval;//¹¥»÷¼ä¸ô£¬µ¥Î»ºÁÃë
+    int intAttack;//¹¥»÷Á¦
+    int intCost;//¼Û¸ñ
+    int arraySize[2];//ËşµÄ´óĞ¡£¬³¤³Ë¿í£¬[0]ÎªË®Æ½³¤¶È£¬[1]ÎªÊúÖ±³¤¶È
+    double doubleAttackRadius;//¹¥»÷·¶Î§£¬Ä¬ÈÏÎªÔ²ĞÎ£¬¸Ã±äÁ¿´ú±íÔ²µÄ°ë¾¶
+    int intHitPoint;//ËşµÄÊ£ÓàÑªÁ¿
     bool boolMonsterDetected;//
-    int intTimeOfLastAttack;//ä¸Šæ¬¡æ”»å‡»çš„æ—¶é—´
+    int intTimeOfLastAttack;//ÉÏ´Î¹¥»÷µÄÊ±¼ä
     Tower(int Locationx=1,int Locationy=1,int AttackInterval=1000,
           int Attack=10,int Cost=10,int Sizex=2,int Sizey=2,
           double AttackRadius=5,int HitPoint=100):
@@ -25,29 +25,29 @@ public:
         arrayLocation[1]=Locationy;
         arraySize[0]=Sizex;
         arraySize[1]=Sizey;
-    }//æ„é€ å‡½æ•°ï¼Œåˆå§‹åŒ–æ•´ä¸ªå¡”
-    bool update(int time,Map* map);//timeè¡¨ç¤ºå½“å‰çš„æ—¶é—´ï¼Œå•ä½æ¯«ç§’ï¼Œè¯¥å‡½æ•°è¢«timerè°ƒç”¨ï¼Œç”¨ä»¥æ›´æ–°å¡”çš„æ”»å‡»CDåŠè¡€é‡
-    Monster* searchMap(Map* map);//ä»mapä¸­æœç´¢å¨èƒæœ€å¤§ï¼ˆæœ€é è¿‘ç»ˆç‚¹ï¼‰ä¸”åœ¨æ”»å‡»èŒƒå›´å†…çš„æ€ªç‰©
-    bool isInAttackingRange(Monster* monster);//åˆ¤æ–­monsteræ˜¯ä¸æ˜¯åœ¨å¡”çš„æ”»å‡»èŒƒå›´å†…
+    }//¹¹Ôìº¯Êı£¬³õÊ¼»¯Õû¸öËş
+    bool update(int time,Map* map);//time±íÊ¾µ±Ç°µÄÊ±¼ä£¬µ¥Î»ºÁÃë£¬¸Ãº¯Êı±»timerµ÷ÓÃ£¬ÓÃÒÔ¸üĞÂËşµÄ¹¥»÷CD¼°ÑªÁ¿
+    Monster* searchMap(Map* map);//´ÓmapÖĞËÑË÷ÍşĞ²×î´ó£¨×î¿¿½üÖÕµã£©ÇÒÔÚ¹¥»÷·¶Î§ÄÚµÄ¹ÖÎï
+    bool isInAttackingRange(Monster* monster);//ÅĞ¶ÏmonsterÊÇ²»ÊÇÔÚËşµÄ¹¥»÷·¶Î§ÄÚ
 };
 
 bool Tower::update(int time,Map* map){
     Monster* monsterDetected=searchMap(map);
     if (monsterDetected&&(time-intTimeOfLastAttack>=intAttackInterval)){
-         monsterDetected->intHitPoint-=intAttack;//å¯¹æ€ªå…½è¿›è¡Œæ”»å‡»
+         monsterDetected->intHitPoint-=intAttack;//¶Ô¹ÖÊŞ½øĞĞ¹¥»÷
         intTimeOfLastAttack=time;
     }
-    return (intHitPoint>0);//å¦‚æœå¡”è¢«æ‘§æ¯ï¼Œè¿”å›false,å¦‚æœä»ç„¶å­˜åœ¨ï¼Œè¿”å›true
+    return (intHitPoint>0);//Èç¹ûËş±»´İ»Ù£¬·µ»Øfalse,Èç¹ûÈÔÈ»´æÔÚ£¬·µ»Øtrue
 }
 
 Monster* Tower::searchMap(Map* map){
     Monster* monsterDetected=nullptr;
-    int i=0;//è¿­ä»£å™¨
-    int intMonster=-1;//ç”¨äºè¡¨ç¤ºmonsterDetectedåœ¨map->monsterExistedä¸­çš„rank
+    int i=0;//µü´úÆ÷
+    int intMonster=-1;//ÓÃÓÚ±íÊ¾monsterDetectedÔÚmap->monsterExistedÖĞµÄrank
     while(i<map->intMonsterNumbers){
         if(isInAttackingRange(map->monsterExisted[i])){
             if(monsterDetected){
-                if(map->monsterExisted[i]>map->monsterExisted[intMonster]){
+                if(map->doubleThreatLevel[i]>map->doubleThreatLevel[intMonster]){
                     monsterDetected=map->monsterExisted[i];
                     intMonster=i;
                 }
@@ -57,7 +57,7 @@ Monster* Tower::searchMap(Map* map){
                 intMonster=i;
             }
         }
-    } //è¿™é‡Œç”¨äºä»mapé‡Œç´¢å–æ€ªå…½ä¿¡æ¯ï¼Œä»è€Œåˆ¤æ–­è¦æ‰“å“ªä¸ªæ€ªå…½
+    } //ÕâÀïÓÃÓÚ´ÓmapÀïË÷È¡¹ÖÊŞĞÅÏ¢£¬´Ó¶øÅĞ¶ÏÒª´òÄÄ¸ö¹ÖÊŞ
     return monsterDetected;
 }
 
@@ -68,3 +68,8 @@ bool Tower::isInAttackingRange(Monster* monster){
             (monster->arrayLocation[1]-arrayLocation[1]);
     return(intDistance<=doubleAttackRadius);
 }
+
+class Tower0 : public Tower
+{
+	Tower0(int Locationx=1,int Locationy=1):Tower(Locationx,Locationy,1000,10,10,2,2,5.0,100){ }//¹¹Ôìº¯Êı£¬³õÊ¼»¯Õû¸öËş	
+};
