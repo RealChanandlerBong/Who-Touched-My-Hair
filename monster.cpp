@@ -1,32 +1,33 @@
-<<<<<<< HEAD
 #include <iostream>
 using namespace std;
 
-int roadCellAmount=1;//é“è·¯æ ¼å­çš„æ€»æ•°
-int roadLocation[100][2]={0};//æŒ‰é¡ºåºæ’åˆ—çš„é“è·¯æ ¼å­ä½ç½®
+int roadCellAmount=1;//µÀÂ·¸ñ×ÓµÄ×ÜÊı
+int roadLocation[100][2]={0};//°´Ë³ĞòÅÅÁĞµÄµÀÂ·¸ñ×ÓÎ»ÖÃ
 
-=======
->>>>>>> adbb65f20fe4fc1dda7ededc517c517ed8c4cdb7
 class Monster{
 public:
-    int intHitPoint;//æ€ªç‰©çš„è¡€é‡
-    int arrayLocation[2];//æ€ªç‰©çš„ä½ç½®
-<<<<<<< HEAD
-	int monsterMoveSpeed;//æ€ªç‰©çš„é€Ÿåº¦
-    int locationOrder;//æ€ªç‰©å¤„äºç¬¬å‡ ä¸ªé“è·¯æ ¼å­ä¸Š
-    Monster(int blood, int speed){//æ„é€ å‡½æ•°
+    int intHitPoint;//¹ÖÎïµÄÑªÁ¿
+    int arrayLocation[2];//¹ÖÎïµÄÎ»ÖÃ
+	int monsterMoveSpeed;//¹ÖÎïµÄËÙ¶È
+    int locationOrder;//¹ÖÎï´¦ÓÚµÚ¼¸¸öµÀÂ·¸ñ×ÓÉÏ
+    Monster(int blood, int speed){//¹¹Ôìº¯Êı
         intHitPoint = blood;
         monsterMoveSpeed = speed;
         *arrayLocation = *roadLocation[0];
     }
-    void move();//æ€ªç‰©å‰è¿›ä¸€æ¬¡
-    bool hitHome();//åˆ¤æ–­æ€ªç‰©æ˜¯å¦åˆ°è€å®¶
+    void move();//¹ÖÎïÇ°½øÒ»´Î
+    bool hitHome();//ÅĞ¶Ï¹ÖÎïÊÇ·ñµ½ÀÏ¼Ò
 };
 
 void Monster::move(){
     locationOrder += monsterMoveSpeed;
     *arrayLocation = *roadLocation[locationOrder];
 }
+/*
+ÇëÇóÖØĞ´moveº¯Êı
+1 positionÓ¦¸ÃÊÇdoubleÀàĞÍ£¬²»È»Ìø¸ñ×Ó 
+2 Ï£ÍûÄÜÌá¹©moveºóËù´¦ roadLocation µÄ rank(doubleÀàĞÍ) 
+*/ 
 
 bool Monster::hitHome(){
     return locationOrder==roadCellAmount-1;
@@ -38,7 +39,4 @@ int main(){
     m.move();
     cout<<"1111111";
     return 0;
-}
-=======
-};
->>>>>>> adbb65f20fe4fc1dda7ededc517c517ed8c4cdb7
+} 
