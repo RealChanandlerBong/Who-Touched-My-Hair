@@ -1,6 +1,6 @@
 # Who-Touched-My-Hair
 <p>SE Group Work - 2019 fall</p>
-<p>A mini game developed for course Software Engineering</p>
+A mini game developed for course Software Engineering</br>
 <p>Our blog: <a href="http://soft.cs.tsinghua.edu.cn/blog/?q=node/3631">Click Me</a></p>
 
 Development logs:
