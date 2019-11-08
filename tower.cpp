@@ -8,16 +8,16 @@ Tower::Tower()
 bool Tower::update(int time,Map* map){
     Monster* monsterDetected = searchMap(map);
     if (monsterDetected&&(time-intTimeOfLastAttack>=intAttackInterval)){
-         monsterDetected->intHitPoint-=intAttack;//对怪兽进行攻击
+         monsterDetected->intHitPoint-=intAttack;//�Թ��޽��й���
         intTimeOfLastAttack=time;
     }
-    return (intHitPoint>0);//如果塔被摧毁，返回false,如果仍然存在，返回true
+    return (intHitPoint>0);//��������ݻ٣�����false,�����Ȼ���ڣ�����true
 }
 
 Monster* Tower::searchMap(Map* map){
     Monster* monsterDetected=nullptr;
-    int i=0;//迭代器
-    int intMonster=-1;//用于表示monsterDetected在map->monsterExisted中的rank
+    int i=0;//������
+    int intMonster=-1;//���ڱ�ʾmonsterDetected��map->monsterExisted�е�rank
     while(i<map->intMonsterNumbers){
         if(isInAttackingRange(map->monsterExisted[i])){
             if(monsterDetected){
@@ -31,7 +31,7 @@ Monster* Tower::searchMap(Map* map){
                 intMonster=i;
             }
         }
-    } //这里用于从map里索取怪兽信息，从而判断要打哪个怪兽
+    } //�������ڴ�map����ȡ������Ϣ���Ӷ��ж�Ҫ���ĸ�����
     return monsterDetected;
 }
 
