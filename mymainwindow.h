@@ -28,11 +28,9 @@ public:
 
     int roleChoose; //用于表示玩家身份，0表示玩家扮演塔，1表示玩家扮演怪
 
-    int originX, originY; //用于记录鼠标点击的位置，主要用于造塔时拖动用
+    //int originX, originY; //用于记录鼠标点击的位置，主要用于造塔时拖动用
 
-    int towerCategory; //用于表示造塔的种类
-
-    bool dragMouse; //用于表示鼠标拖动状态，0表示拖动完成，1表示即将拖动
+    int towerType; //用于表示造塔的种类
 
     //Map myMap; 要不直接写进去，map类也作为monster和tower类的成员共用
 
@@ -44,6 +42,17 @@ public:
 
     void initial(); //根据玩家身份选择，初始化游戏界面
 
+    void chooseRole(); //选择角色函数，隐藏/显示相关widget
+
+    void gameStart(); //选择完角色，游戏开始
+
+    void produceHint(QMouseEvent *); //判断鼠标是否悬浮在某个格子上方
+
+    QRect recTower, recMonster; //选择角色时用的按钮
+
+    QRect recMap; //全地图
+
+    int LatticeLength, LatticeWidth; //以像素点为单位
 
 
 private slots:

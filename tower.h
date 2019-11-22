@@ -8,10 +8,6 @@
 
 class Tower
 {
-    friend Map;
-
-    friend Monster;
-
 public:
     Tower();
 
@@ -45,19 +41,17 @@ public:
             arraySize[1]=Sizey;
         }//构造函数，初始化整个塔
 
-    void ProduceMonster(int MonsterType);
-
-    bool ProduceTower(int TowerType,int x,int y);//x y 表示塔左上角坐标
-
-    bool MapisOccupied(int x,int y,int towersizex,int towersizey);
-
-    void MapStateChangeToTower(int x,int y,int towersizex,int towersizey,char newstate);//修改MapState为塔
-
-    void update(int time,Map* map);//time表示当前的时间，单位毫秒，该函数被timer调用，用以更新塔的攻击CD及血量
+    bool update(int time,Map* map);//time表示当前的时间，单位毫秒，该函数被timer调用，用以更新塔的攻击CD及血量
 
     bool isInAttackingRange(Monster* monster);//判断怪是否在塔的攻击范围内
 
     Monster* searchMap(Map* map);//从map类索取怪的信息，判断要打哪个怪
+};
+
+class Tower0 : public Tower
+{
+public:
+    Tower0(int Locationx=1,int Locationy=1):Tower(Locationx,Locationy,1000,10,10,2,2,5.0,100){ }//构造函数，初始化整个塔
 };
 
 #endif // TOWER_H
