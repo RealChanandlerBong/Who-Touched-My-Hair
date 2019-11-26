@@ -46,6 +46,8 @@ public:
 
     void gameStart(); //选择完角色，游戏开始
 
+	void update();//每五秒生成新的怪+每秒检查游戏是否失败
+
     void produceHint(QMouseEvent *); //判断鼠标是否悬浮在某个格子上方
 
     QRect recTower, recMonster; //选择角色时用的按钮
@@ -64,5 +66,7 @@ private slots:
 
 private:
     Ui::myMainWindow *ui;
+	QTimer* fTimer; //定时器
+	QTime fTimeCounter;//计时器
 };
 #endif // MYMAINWINDOW_H
