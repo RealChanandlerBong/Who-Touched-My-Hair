@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/map">
+        <file>map.png</file>
+    </qresource>
+    <qresource prefix="/tower">
+        <file>ge.png</file>
+        <file>water.png</file>
+        <file>pot.png</file>
+    </qresource>
+    <qresource prefix="/monster">
+        <file>quant.png</file>
+        <file>homework.png</file>
+    </qresource>
+    <qresource prefix="/bullet">
+        <file>ge_bullet.png</file>
+        <file>water_bullet.png</file>
+        <file>pot_bullet.png</file>
+    </qresource>
+</RCC>
