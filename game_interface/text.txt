@@ -1,2 +1,2 @@
 贴图函数编写中……
-需要塔类和怪物类补充相关参数，详见文件夹内的tower.cpp和monster.cpp
+需要塔类和怪物类补充相关参数，详见PaintingMap文件夹内的tower.h和monster.h
