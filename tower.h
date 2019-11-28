@@ -1,33 +1,32 @@
+//#pragma once
 #ifndef TOWER_H
 #define TOWER_H
 
-#include "map.h"
-#include "monster.h"
-
-#define doubleThreatLevel[n]=-DistanceToFinal[n]; //è¿™ä¸ªå‡å·æ˜¯ä»€ä¹ˆæ„æ€???
+class Map;
+class Monster;
 
 class Tower
 {
 public:
     Tower();
 
-    int arrayLocation[2];//ä½ç½®åæ ‡ï¼Œ[0]ä¸ºxï¼Œ[1]ä¸ºy
+    int arrayLocation[2];//Î»ÖÃ×ø±ê£¬[0]Îªx£¬[1]Îªy
 
-    int intAttackInterval;//æ”»å‡»é—´éš”ï¼Œå•ä½æ¯«ç§’
+    int intAttackInterval;//¹¥»÷¼ä¸ô£¬µ¥Î»ºÁÃë
 
-    int intAttack;//æ”»å‡»åŠ›
+    int intAttack;//¹¥»÷Á¦
 
-    int intCost;//ä»·æ ¼
+    int intCost;//¼Û¸ñ
 
-    int arraySize[2];//å¡”çš„å¤§å°ï¼Œé•¿ä¹˜å®½ï¼Œ[0]ä¸ºæ°´å¹³é•¿åº¦ï¼Œ[1]ä¸ºç«–ç›´é•¿åº¦
+    int arraySize[2];//ËşµÄ´óĞ¡£¬³¤³Ë¿í£¬[0]ÎªË®Æ½³¤¶È£¬[1]ÎªÊúÖ±³¤¶È
 
-    double doubleAttackRadius;//æ”»å‡»èŒƒå›´ï¼Œé»˜è®¤ä¸ºåœ†å½¢ï¼Œè¯¥å˜é‡ä»£è¡¨åœ†çš„åŠå¾„
+    double doubleAttackRadius;//¹¥»÷·¶Î§£¬Ä¬ÈÏÎªÔ²ĞÎ£¬¸Ã±äÁ¿´ú±íÔ²µÄ°ë¾¶
 
-    int intHitPoint;//å¡”çš„å‰©ä½™è¡€é‡
+    int intHitPoint;//ËşµÄÊ£ÓàÑªÁ¿
 
     bool boolMonsterDetected;//
 
-    int intTimeOfLastAttack;//ä¸Šæ¬¡æ”»å‡»çš„æ—¶é—´
+    int intTimeOfLastAttack;//ÉÏ´Î¹¥»÷µÄÊ±¼ä
 
     Tower(int Locationx=1,int Locationy=1,int AttackInterval=1000,
               int Attack=10,int Cost=10,int Sizex=2,int Sizey=2,
@@ -39,19 +38,20 @@ public:
             arrayLocation[1]=Locationy;
             arraySize[0]=Sizex;
             arraySize[1]=Sizey;
-        }//æ„é€ å‡½æ•°ï¼Œåˆå§‹åŒ–æ•´ä¸ªå¡”
+        }//¹¹Ôìº¯Êı£¬³õÊ¼»¯Õû¸öËş
 
-    bool update(int time,Map* map);//timeè¡¨ç¤ºå½“å‰çš„æ—¶é—´ï¼Œå•ä½æ¯«ç§’ï¼Œè¯¥å‡½æ•°è¢«timerè°ƒç”¨ï¼Œç”¨ä»¥æ›´æ–°å¡”çš„æ”»å‡»CDåŠè¡€é‡
+    bool update(int time,Map* map);//time±íÊ¾µ±Ç°µÄÊ±¼ä£¬µ¥Î»ºÁÃë£¬¸Ãº¯Êı±»timerµ÷ÓÃ£¬ÓÃÒÔ¸üĞÂËşµÄ¹¥»÷CD¼°ÑªÁ¿
 
-    bool isInAttackingRange(Monster* monster);//åˆ¤æ–­æ€ªæ˜¯å¦åœ¨å¡”çš„æ”»å‡»èŒƒå›´å†…
+    bool isInAttackingRange(Monster* monster,Map* map);//ÅĞ¶Ï¹ÖÊÇ·ñÔÚËşµÄ¹¥»÷·¶Î§ÄÚ
 
-    Monster* searchMap(Map* map);//ä»mapç±»ç´¢å–æ€ªçš„ä¿¡æ¯ï¼Œåˆ¤æ–­è¦æ‰“å“ªä¸ªæ€ª
+    Monster* searchMap(Map* map);//´ÓmapÀàË÷È¡¹ÖµÄĞÅÏ¢£¬ÅĞ¶ÏÒª´òÄÄ¸ö¹Ö
 };
+
 
 class Tower0 : public Tower
 {
 public:
-    Tower0(int Locationx=1,int Locationy=1):Tower(Locationx,Locationy,1000,10,10,2,2,5.0,100){ }//æ„é€ å‡½æ•°ï¼Œåˆå§‹åŒ–æ•´ä¸ªå¡”
+    Tower0(int Locationx=1,int Locationy=1):Tower(Locationx,Locationy,1000,10,10,2,2,5.0,100){ }//¹¹Ôìº¯Êı£¬³õÊ¼»¯Õû¸öËş
 };
 
 #endif // TOWER_H

@@ -1,22 +1,26 @@
+//#pragma once
 #ifndef MONSTER_H
 #define MONSTER_H
 
-#include "tower.h"
-#include "map.h"
+//#include "tower.h"
+//#include "map.h"
 
+class Map;
 class Monster{
 public:
-    int intHitPoint;//æ€ªç‰©çš„è¡€é‡
+	Map* map;
 
-    double monsterMoveSpeed;//æ€ªç‰©çš„é€Ÿåº¦(æ¯æ¬¡åˆ·æ–°èµ°è¿‡çš„è·ç¦»ä¸ä¸€ä¸ªæ ¼å­é•¿åº¦çš„æ¯”å€¼)
+    int intHitPoint;//¹ÖÎïµÄÑªÁ¿
 
-    double locationOrder;//æ€ªç‰©çš„ä½ç½®ï¼Œä»¥é“è·¯æ ¼å­ä¸ºå•ä½ï¼Œå¦‚æ€ªç‰©åœ¨ç¬¬ä¸‰ä¸ªæ ¼å­çš„1/3ä½ç½®ï¼Œåˆ™å€¼ä¸º2.333333333
+    double monsterMoveSpeed;//¹ÖÎïµÄËÙ¶È(Ã¿´ÎË¢ĞÂ×ß¹ıµÄ¾àÀëÓëÒ»¸ö¸ñ×Ó³¤¶ÈµÄ±ÈÖµ)
 
-    Monster(int blood, double speed);//æ„é€ å‡½æ•°
+    double locationOrder;//¹ÖÎïµÄÎ»ÖÃ£¬ÒÔµÀÂ·¸ñ×ÓÎªµ¥Î»£¬Èç¹ÖÎïÔÚµÚÈı¸ö¸ñ×ÓµÄ1/3Î»ÖÃ£¬ÔòÖµÎª2.333333333
 
-    double move();//æ€ªç‰©å‰è¿›ä¸€æ¬¡ï¼Œå¹¶ä¸”è¿”å›ä¸ç»ˆç‚¹çš„è·ç¦»ï¼Œä»¥é“è·¯æ ¼å­ä¸ºå•ä½ï¼ŒåŒlocationOrder
+    Monster(int blood, double speed, Map *map);//¹¹Ôìº¯Êı
 
-    bool hitHome();//åˆ¤æ–­æ€ªç‰©æ˜¯å¦åˆ°è€å®¶
+    double move();//¹ÖÎïÇ°½øÒ»´Î£¬²¢ÇÒ·µ»ØÓëÖÕµãµÄ¾àÀë£¬ÒÔµÀÂ·¸ñ×ÓÎªµ¥Î»£¬Í¬locationOrder
+
+    bool hitHome();//ÅĞ¶Ï¹ÖÎïÊÇ·ñµ½ÀÏ¼Ò
 };
 
 #endif // MONSTER_H

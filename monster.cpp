@@ -1,20 +1,21 @@
 #include "monster.h"
-#include "map.h"
-/*éœ€è¦Mapæä¾›çš„å˜é‡
-Map.roadAmount; //é“è·¯æ ¼å­çš„æ€»ä¸ªæ•°
+/*ÐèÒªMapÌá¹©µÄ±äÁ¿
+Map.roadAmount; //µÀÂ·¸ñ×ÓµÄ×Ü¸öÊý
 */
+#include"map.h"
 
-Monster::Monster(int blood, double speed) {
+Monster::Monster(int blood, double speed, Map *thismap) {
     intHitPoint = blood;
     monsterMoveSpeed = speed;
+	map = thismap;
     locationOrder = 0;
 }
 
 double Monster::move() {
     locationOrder += monsterMoveSpeed;
-    return (double(roadCellAmount) - locationOrder); //è¿™è¾¹æ€Žä¹ˆå›žäº‹ï¼Ÿ
+    return (double(map->roadCellAmount) - locationOrder); //Õâ±ßÔõÃ´»ØÊÂ£¿
 }
 
 bool Monster::hitHome() {
-    return (locationOrder == Map.roadAmount + 1);
+    return (locationOrder == map->roadCellAmount + 1);
 }

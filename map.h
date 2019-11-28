@@ -1,8 +1,9 @@
-#ifndef MAP_H
-#define MAP_H
+#pragma once
+//#ifndef MAP_H
+//#define MAP_H
 
-#include "monster.h"
-#include "tower.h"
+class Monster;
+class Tower;
 
 class Map
 {
@@ -10,34 +11,36 @@ public:
 
     int sizex, sizey;
 
-    int roadCellAmount;//é“è·¯æ ¼å­çš„æ€»æ•°
+    int roadCellAmount;//µÀÂ·¸ñ×ÓµÄ×ÜÊı
 
-    int roadLocation[100][2];//æŒ‰é¡ºåºæ’åˆ—çš„é“è·¯æ ¼å­ä½ç½®
+    int roadLocation[100][2];//°´Ë³ĞòÅÅÁĞµÄµÀÂ·¸ñ×ÓÎ»ÖÃ
 
-    double DistanceToFinal[100];//æ€ªç‰©åˆ°ç»ˆç‚¹çš„è·ç¦»/-æ€ªç‰©å¨èƒåº¦
+    double DistanceToFinal[100];//¹ÖÎïµ½ÖÕµãµÄ¾àÀë/-¹ÖÎïÍşĞ²¶È
 
     int intTowerNumbers;
 
     int intMonsterNumbers;
+    
+    int intHairBlood;//Í··¢ÑªÁ¿ 
+    
+    Monster* monsterExisted[100];//µØÍ¼ÉÏ´æÔÚµÄ¹ÖÎï
 
-    Tower* towerExisted[100];//åœ°å›¾ä¸Šå­˜åœ¨çš„æ€ªç‰©
+    Tower* towerExisted[100];//µØÍ¼ÉÏ´æÔÚµÄËş 
 
-    Monster* monsterExisted[100];//åœ°å›¾ä¸Šå­˜åœ¨çš„æ€ªç‰©
+    int **MapState; //-2ÎªÍ··¢ -1ÎªÂ·£¬0Îª¿Õ£¬1ÎªËş£¬2±íÊ¾¿ÉÒÔÖÖËş£¬ÌùÒ»¸öÍ¸Ã÷µÄËş
 
-    int **MapState; //-1ä¸ºè·¯ï¼Œ0ä¸ºç©ºï¼Œ1ä¸ºå¡”ï¼Œ2è¡¨ç¤ºå¯ä»¥ç§å¡”ï¼Œè´´ä¸€ä¸ªé€æ˜çš„å¡”
-
-    Map( int roadLocation[][2], int roadlength, int x, int y);
+    Map( int roadLocation[][2], int roadlength, int x=50, int y=30,int hairblood=10);
 
     void ProduceMonster(int MonsterType);
 
-    bool ProduceTower(int TowerType,int x,int y);//x y è¡¨ç¤ºå¡”å·¦ä¸Šè§’åæ ‡
+    bool ProduceTower(int TowerType,int x,int y);//x y ±íÊ¾Ëş×óÉÏ½Ç×ø±ê
 
-    bool MapisOccupied(int x,int y,int towersizex,int towersizey); //æŒ‡å®šä½ç½®çš„æ ¼å­æ˜¯å¦è¢«å ç”¨
+    bool MapisOccupied(int x,int y,int towersizex,int towersizey); //Ö¸¶¨Î»ÖÃµÄ¸ñ×ÓÊÇ·ñ±»Õ¼ÓÃ
 
-    void MapStateChange(int x,int y,int towersizex,int towersizey,char newstate);//ä¿®æ”¹MapStateä¸ºå¡” //å°±æ˜¯å»ºäº†ä¸€åº§å¡”
+    void MapStateChange(int x,int y,int towersizex,int towersizey,int newstate);//ĞŞ¸ÄMapStateÎªËş //¾ÍÊÇ½¨ÁËÒ»×ùËş
 
-    void Update(int);//timeè¡¨ç¤ºå½“å‰çš„æ—¶é—´ï¼Œå•ä½æ¯«ç§’ï¼Œè¯¥å‡½æ•°è¢«timerè°ƒç”¨ï¼Œç”¨ä»¥æ›´æ–°å¡”çš„æ”»å‡»CDåŠè¡€é‡
+    bool Update(int);//time±íÊ¾µ±Ç°µÄÊ±¼ä£¬µ¥Î»ºÁÃë£¬¸Ãº¯Êı±»timerµ÷ÓÃ£¬ÓÃÒÔ¸üĞÂËşµÄ¹¥»÷CD¼°ÑªÁ¿²¢ÅĞ¶ÏÓÎÏ·ÊÇ·ñ½áÊø£¬trueÎªÓÎÏ·¼ÌĞø 
 
 };
 
-#endif // MAP_H
+//#endif // MAP_H

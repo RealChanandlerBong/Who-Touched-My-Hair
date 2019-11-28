@@ -1,4 +1,6 @@
 #include "tower.h"
+#include "map.h"
+#include "monster.h"
 
 Tower::Tower()
 {
@@ -8,18 +10,18 @@ Tower::Tower()
 bool Tower::update(int time,Map* map){
     Monster* monsterDetected = searchMap(map);
     if (monsterDetected&&(time-intTimeOfLastAttack>=intAttackInterval)){
-         monsterDetected->intHitPoint-=intAttack; //å¯¹æ€ªå…½è¿›è¡Œæ”»å‡»
+         monsterDetected->intHitPoint-=intAttack; //¶Ô¹ÖÊÞ½øÐÐ¹¥»÷
         intTimeOfLastAttack=time;
     }
-    return (intHitPoint>0); //å¦‚æžœå¡”è¢«æ‘§æ¯ï¼Œè¿”å›žfalse,å¦‚æžœä»ç„¶å­˜åœ¨ï¼Œè¿”å›žtrue
+    return (intHitPoint>0); //Èç¹ûËþ±»´Ý»Ù£¬·µ»Øfalse,Èç¹ûÈÔÈ»´æÔÚ£¬·µ»Øtrue
 }
 
 Monster* Tower::searchMap(Map* map){
     Monster* monsterDetected=nullptr;
-    int i=0; //è¿­ä»£å™¨
-    int intMonster=-1; //ç”¨äºŽè¡¨ç¤ºmonsterDetectedåœ¨map->monsterExistedä¸­çš„rank
+    int i=0; //µü´úÆ÷
+    int intMonster=-1; //ÓÃÓÚ±íÊ¾monsterDetectedÔÚmap->monsterExistedÖÐµÄrank
     while(i<map->intMonsterNumbers){
-        if(isInAttackingRange(map->monsterExisted[i])){
+        if(isInAttackingRange(map->monsterExisted[i],map)){
             if(monsterDetected){
                 if(map->DistanceToFinal[i] < map->DistanceToFinal[intMonster]){
                     monsterDetected=map->monsterExisted[i];
@@ -31,14 +33,17 @@ Monster* Tower::searchMap(Map* map){
                 intMonster=i;
             }
         }
-    } //è¿™é‡Œç”¨äºŽä»Žmapé‡Œç´¢å–æ€ªå…½ä¿¡æ¯ï¼Œä»Žè€Œåˆ¤æ–­è¦æ‰“å“ªä¸ªæ€ªå…½
+    } //ÕâÀïÓÃÓÚ´ÓmapÀïË÷È¡¹ÖÊÞÐÅÏ¢£¬´Ó¶øÅÐ¶ÏÒª´òÄÄ¸ö¹ÖÊÞ
     return monsterDetected;
 }
 
-bool Tower::isInAttackingRange(Monster* monster){
-    double intDistance=(monster->arrayLocation[0]-arrayLocation[0])*
-            (monster->arrayLocation[0]-arrayLocation[0])+
-            (monster->arrayLocation[1]-arrayLocation[1])*
-            (monster->arrayLocation[1]-arrayLocation[1]);
+bool Tower::isInAttackingRange(Monster* monster,Map* map){
+	double monsterx, monstery;
+	monsterx = (map->roadLocation[(int)(monster->locationOrder)][0]) * ((int)(monster->locationOrder)+1- monster->locationOrder) + (map->roadLocation[1 + (int)(monster->locationOrder)][0])*(monster->locationOrder -(int)(monster->locationOrder));
+	monstery = (map->roadLocation[(int)(monster->locationOrder)][1]) * ((int)(monster->locationOrder) + 1 - monster->locationOrder) + (map->roadLocation[1 + (int)(monster->locationOrder)][1]) * (monster->locationOrder - (int)(monster->locationOrder));
+	double intDistance=(monsterx -arrayLocation[0])*
+            (monsterx -arrayLocation[0])+
+            (monstery -arrayLocation[1])*
+            (monstery -arrayLocation[1]);
     return(intDistance<=doubleAttackRadius);
 }
