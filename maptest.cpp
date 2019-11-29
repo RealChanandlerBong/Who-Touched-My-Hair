@@ -40,7 +40,7 @@ int main()
 
 	
 	newmap.ProduceMonster(0);
-	newmap.ProduceTower(0, 2, 2);
+	newmap.ProduceTower(0, 3, 2);
 	cout << "现在Monster的个数有：" << newmap.intMonsterNumbers << endl;
 	cout << "现在Tower的个数有：" << newmap.intTowerNumbers << endl;
 	cout << endl;
@@ -62,8 +62,10 @@ int main()
 		cout << endl;
 	}
 	cout << endl;
-	newmap.Update(20);
-	
+	while (true) {
+		newmap.Update(100);
+		cout << newmap.monsterExisted[0]->intHitPoint << ' '<< newmap.monsterExisted[0]->locationOrder <<endl;
+	}
 
 	return 0;
 }
