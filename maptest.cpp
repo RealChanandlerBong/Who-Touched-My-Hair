@@ -108,10 +108,6 @@ int main()
 		cout << endl;
 	}
 	cout << endl;
-	//while (true) {
-	//	newmap.Update(100);
-	//	cout << newmap.monsterExisted[0]->intHitPoint << ' ' << newmap.monsterExisted[0]->locationOrder << endl;
-	//}
 
 	return 0;
 }

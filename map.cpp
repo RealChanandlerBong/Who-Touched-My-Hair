@@ -89,6 +89,10 @@ bool Map::Update(int time)//time的单位是ms
     	if (monsterExisted[i]->hitHome() == true)
     	{
     		intHairBlood --;
+			delete monsterExisted[i];
+			for (int j = i; j < intMonsterNumbers - 1; j++)
+				monsterExisted[j] = monsterExisted[j + 1];
+			intMonsterNumbers--;
     		if (intHairBlood == 0)
     			return false;
     	}
