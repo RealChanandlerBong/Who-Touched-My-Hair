@@ -1,8 +1,9 @@
 #include "monster.h"
-/*ÐèÒªMapÌá¹©µÄ±äÁ¿
-Map.roadAmount; //µÀÂ·¸ñ×ÓµÄ×Ü¸öÊý
+/*ï¿½ï¿½ÒªMapï¿½á¹©ï¿½Ä±ï¿½ï¿½ï¿½
+Map.roadAmount; //ï¿½ï¿½Â·ï¿½ï¿½ï¿½Óµï¿½ï¿½Ü¸ï¿½ï¿½ï¿½
 */
 #include"map.h"
+#include "tower.h"
 
 Monster::Monster(int blood, double speed, Map *thismap) {
     intHitPoint = blood;
@@ -13,9 +14,12 @@ Monster::Monster(int blood, double speed, Map *thismap) {
 
 double Monster::move() {
     locationOrder += monsterMoveSpeed;
-    return (double(map->roadCellAmount) - locationOrder); //Õâ±ßÔõÃ´»ØÊÂ£¿
+    monsterLocation[0] = (map->roadLocation[(int)(locationOrder)][0]) * ((int)(locationOrder) + 1 - locationOrder) + (map->roadLocation[1 + (int)(locationOrder)][0]) * (locationOrder - (int)(locationOrder));
+	monsterLocation[1] = (map->roadLocation[(int)(locationOrder)][1]) * ((int)(locationOrder) + 1 - locationOrder) + (map->roadLocation[1 + (int)(locationOrder)][1]) * (locationOrder - (int)(locationOrder));
+    return (double(map->roadCellAmount) - locationOrder); //ï¿½ï¿½ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½Â£ï¿½
 }
 
 bool Monster::hitHome() {
-    return (locationOrder == map->roadCellAmount + 1);
+    return (locationOrder >= map->roadCellAmount);
 }
+
