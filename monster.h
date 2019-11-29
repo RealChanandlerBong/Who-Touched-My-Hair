@@ -10,19 +10,19 @@ class Monster{
 public:
 	Map* map;
 
-    int intHitPoint;//�����Ѫ��
+    int intHitPoint;
 
-    double monsterMoveSpeed;//������ٶ�(ÿ��ˢ���߹��ľ�����һ�����ӳ��ȵı�ֵ)
+    double monsterMoveSpeed;
 
-    double locationOrder;//�����λ�ã��Ե�·����Ϊ��λ��������ڵ��������ӵ�1/3λ�ã���ֵΪ2.333333333
+    double locationOrder;
 
     double monsterLocation[2];
 
-    Monster(int blood, double speed, Map *map);//���캯��
+    Monster(int type, Map *map);
 
-    double move();//����ǰ��һ�Σ����ҷ������յ�ľ��룬�Ե�·����Ϊ��λ��ͬlocationOrder
+    double move();
 
-    bool hitHome();//�жϹ����Ƿ��ϼ�
+    bool hitHome();
 };
 
 #endif // MONSTER_H
