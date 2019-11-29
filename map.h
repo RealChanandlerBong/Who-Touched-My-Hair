@@ -29,7 +29,7 @@ public:
 
     int **MapState; //-2为头发 -1为路，0为空，1为塔，2表示可以种塔，贴一个透明的塔
 
-    Map( int roadLocation[][2], int roadlength, int x=50, int y=30,int hairblood=10);
+    Map( int road[][2], int roadlength, int x=50, int y=30,int hairblood=10);
 
     void ProduceMonster(int MonsterType);
 

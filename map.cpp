@@ -3,7 +3,7 @@
 #include "monster.h"
 #include "tower.h"
 
-Map::Map(int roadLocation[][2],int roadlength, int x,int y,int hairblood)
+Map::Map(int road[][2],int roadlength, int x,int y,int hairblood)
 {
     intMonsterNumbers = 0;
     intTowerNumbers = 0;
@@ -12,6 +12,10 @@ Map::Map(int roadLocation[][2],int roadlength, int x,int y,int hairblood)
     sizey = y;
 	roadCellAmount = roadlength;
     MapState = new int*[x];
+	
+	for (int i = 0; i < roadlength; i++)
+		for (int j = 0; j < 2; j++)
+			roadLocation[i][j] = road[i][j];
 
     for(int i = 0; i < y; i++)
         MapState[i] = new int[y];
@@ -44,7 +48,7 @@ bool Map::ProduceTower(int TowerType, int x, int y)
     {
         case 0:
             towerExisted[intTowerNumbers]=new Tower0(x,y); //0号塔
-            if (MapisOccupied(x,y,towerExisted[intTowerNumbers]->arraySize[0],towerExisted[intTowerNumbers]->arraySize[1])==0)//未被占用 可以建塔
+            if (MapisOccupied(x,y,towerExisted[intTowerNumbers]->arraySize[0],towerExisted[intTowerNumbers]->arraySize[1]) == true)//未被占用 可以建塔
             {
                 MapStateChange(x,y,towerExisted[intTowerNumbers]->arraySize[0],towerExisted[intTowerNumbers]->arraySize[1],1);//修改MapState
 				intTowerNumbers++;
@@ -66,7 +70,7 @@ bool Map::MapisOccupied(int x,int y,int towersizex,int towersizey)
 {
     for (int i=0;i<towersizex;i++)
         for (int j=0;j<towersizey;j++)
-            if (MapState[i+x][j+y]!=-1 && MapState[i+x][j+y] != 1)
+            if (MapState[i+x][j+y]!=0)
                 return false;
     return true;//未被占用
 }
