@@ -1,5 +1,21 @@
-class Monster{
-public:
-    int intHitPoint;//æ€ªç‰©çš„è¡€é‡
-    int arrayLocation[2];//æ€ªç‰©çš„ä½ç½®
-};
+#include "monster.h"
+/*ÐèÒªMapÌá¹©µÄ±äÁ¿
+Map.roadAmount; //µÀÂ·¸ñ×ÓµÄ×Ü¸öÊý
+*/
+#include"map.h"
+
+Monster::Monster(int blood, double speed, Map *thismap) {
+    intHitPoint = blood;
+    monsterMoveSpeed = speed;
+	map = thismap;
+    locationOrder = 0;
+}
+
+double Monster::move() {
+    locationOrder += monsterMoveSpeed;
+    return (double(map->roadCellAmount) - locationOrder); //Õâ±ßÔõÃ´»ØÊÂ£¿
+}
+
+bool Monster::hitHome() {
+    return (locationOrder == map->roadCellAmount + 1);
+}

@@ -1,7 +1,112 @@
-#include "monster.cpp"
-class Map{
-public:
-    int intThreatLevel[100];//æ€ªç‰©å¨èƒåº¦
-    Monster* monsterExisted[100];//åœ°å›¾ä¸Šå­˜åœ¨çš„æ€ªç‰©
-    int intMonsterNumbers;
-};
+#include "map.h"
+
+#include "monster.h"
+#include "tower.h"
+
+Map::Map(int roadLocation[][2],int roadlength, int x,int y,int hairblood)
+{
+    intMonsterNumbers = 0;
+    intTowerNumbers = 0;
+    intHairBlood = hairblood;
+    sizex = x;
+    sizey = y;
+	roadCellAmount = roadlength;
+    MapState = new int*[x];
+
+    for(int i = 0; i < y; i++)
+        MapState[i] = new int[y];
+
+    for (int i=0;i<x;i++)
+          for (int j=0;j<y;j++)
+                MapState[i][j] = 0;
+    for (int i=0;i<roadlength-1;i++)
+          MapState[roadLocation[i][0]][roadLocation[i][1]] = -1;
+	MapState[roadLocation[roadlength - 1][0]][roadLocation[roadlength - 1][1]] = -2;
+}
+
+void Map::ProduceMonster(int MonsterType=0)
+{
+    switch (MonsterType)
+    {
+        case 0:
+            monsterExisted[intMonsterNumbers]=new Monster(100,1,this); //0ºÅ¹Ö 100 1
+            break;
+
+        default:
+            break;
+    }
+    intMonsterNumbers++;
+}
+
+bool Map::ProduceTower(int TowerType, int x, int y)
+{
+    switch (TowerType)
+    {
+        case 0:
+            towerExisted[intTowerNumbers]=new Tower0(x,y); //0ºÅËş
+            if (MapisOccupied(x,y,towerExisted[intTowerNumbers]->arraySize[0],towerExisted[intTowerNumbers]->arraySize[1])==0)//Î´±»Õ¼ÓÃ ¿ÉÒÔ½¨Ëş
+            {
+                MapStateChange(x,y,towerExisted[intTowerNumbers]->arraySize[0],towerExisted[intTowerNumbers]->arraySize[1],1);//ĞŞ¸ÄMapState
+				intTowerNumbers++;
+				return true;
+            }
+            else
+            {
+                delete towerExisted[intTowerNumbers];
+                return false;
+            }
+            break;
+
+        default:
+            break;
+    }
+}
+
+bool Map::MapisOccupied(int x,int y,int towersizex,int towersizey)
+{
+    for (int i=0;i<towersizex;i++)
+        for (int j=0;j<towersizey;j++)
+            if (MapState[i+x][j+y]!=-1 && MapState[i+x][j+y] != 1)
+                return false;
+    return true;//Î´±»Õ¼ÓÃ
+}
+
+void Map::MapStateChange(int x,int y,int towersizex,int towersizey,int newstate)
+{
+    for (int i=0;i<towersizex;i++)
+        for (int j=0;j<towersizey;j++)
+            MapState[i+x][j+y]=newstate;
+}
+bool Map::Update(int time)//timeµÄµ¥Î»ÊÇms
+{
+    for (int i = 0; i<intMonsterNumbers; i++)//ËùÓĞ¹ÖÎïÒÆ¶¯
+    {
+    	DistanceToFinal[i] = monsterExisted[i]->move();
+    	if (monsterExisted[i]->hitHome() == true)
+    	{
+    		intHairBlood --;
+    		if (intHairBlood == 0)
+    			return false;
+    	}
+	}
+    for (int i=0 ; i<intTowerNumbers; i++)//ËùÓĞËş¹¥»÷
+        towerExisted[i]->update(time,this);
+    
+
+    int newintMonsterNumbers = 0;
+    for (int i=0; i<intMonsterNumbers; i++)//ÅĞ¶Ï¹ÖÎïÊÇ·ñËÀÍö ËÀÍöÔòdelete Í¬Ê±Î¬»¤
+    {
+        if (monsterExisted[i]->intHitPoint <= 0)
+        {
+            delete monsterExisted[i];
+            monsterExisted[i] = nullptr;
+        }
+        else
+        {
+            monsterExisted[newintMonsterNumbers] = monsterExisted[i];
+            newintMonsterNumbers++;
+        }
+    }
+    intMonsterNumbers = newintMonsterNumbers;
+    return true;
+}
