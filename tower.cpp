@@ -7,18 +7,31 @@ Tower::Tower(int Locationx, int Locationy, int AttackInterval,
 	double AttackRadius, int HitPoint) :
 	intAttackInterval(AttackInterval), intAttack(Attack),
 	intCost(Cost), doubleAttackRadius(AttackRadius),
-	intHitPoint(HitPoint) {
+	intHitPoint(HitPoint),intTimeSum(AttackInterval){
 	arrayLocation[0] = Locationx;
 	arrayLocation[1] = Locationy;
 	arraySize[0] = Sizex;
 	arraySize[1] = Sizey;
 }
+
+Tower::Tower(int type, int Locationx, int Locationy):
+intAttackInterval(typedata[type][0]), intAttack(typedata[type][1]),
+intCost(typedata[type][2]), doubleAttackRadius(typedata[type][5]),
+intHitPoint(typedata[type][6]), intTimeSum(typedata[type][0]){
+	arrayLocation[0] = Locationx;
+	arrayLocation[1] = Locationy;
+	arraySize[0] = typedata[type][3];
+	arraySize[1] = typedata[type][4];
+}
+
 bool Tower::update(int time, Map* map) {
 	Monster* monsterDetected = searchMap(map);
-	if (monsterDetected && (time - intTimeOfLastAttack >= intAttackInterval)) {
+	intTimeSum += time;
+	if (monsterDetected && (intTimeSum >= intAttackInterval)) {
 		monsterDetected->intHitPoint -= intAttack; //对怪兽进行攻击
-		intTimeOfLastAttack = time;
+		intTimeSum -= intAttackInterval;
 	}
+	if (intTimeSum > intAttackInterval) intTimeSum = intAttackInterval;
 	return (intHitPoint > 0); //如果塔被摧毁，返回false,如果仍然存在，返回true
 }
 
@@ -45,12 +58,9 @@ Monster* Tower::searchMap(Map* map) {
 }
 
 bool Tower::isInAttackingRange(Monster* monster, Map* map) {
-	double monsterx, monstery;
-	monsterx = (map->roadLocation[(int)(monster->locationOrder)][0]) * ((int)(monster->locationOrder) + 1 - monster->locationOrder) + (map->roadLocation[1 + (int)(monster->locationOrder)][0]) * (monster->locationOrder - (int)(monster->locationOrder));
-	monstery = (map->roadLocation[(int)(monster->locationOrder)][1]) * ((int)(monster->locationOrder) + 1 - monster->locationOrder) + (map->roadLocation[1 + (int)(monster->locationOrder)][1]) * (monster->locationOrder - (int)(monster->locationOrder));
-	double intDistance = (monsterx - arrayLocation[0]) *
-		(monsterx - arrayLocation[0]) +
-		(monstery - arrayLocation[1]) *
-		(monstery - arrayLocation[1]);
-	return(intDistance <= doubleAttackRadius);
+	double intDistance = (monster->monsterLocation[0] - arrayLocation[0]) *
+		(monster->monsterLocation[0] - arrayLocation[0]) +
+		(monster->monsterLocation[1] - arrayLocation[1]) *
+		(monster->monsterLocation[1] - arrayLocation[1]);
+	return(intDistance <= doubleAttackRadius* doubleAttackRadius);
 }

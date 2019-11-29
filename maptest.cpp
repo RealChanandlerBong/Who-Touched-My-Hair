@@ -109,5 +109,10 @@ int main()
 	}
 	cout << endl;
 
+	while (true) {
+		if (newmap.monsterExisted[0])cout << newmap.monsterExisted[0]->intHitPoint << ' ' << newmap.monsterExisted[0]->locationOrder << endl;
+		else break;
+		newmap.Update(20);
+	}
 	return 0;
 }
