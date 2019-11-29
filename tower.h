@@ -1,6 +1,8 @@
 //#pragma once
 #ifndef TOWER_H
 #define TOWER_H
+#include <iostream>
+using namespace std;
 
 class Map;
 class Monster;
@@ -29,7 +31,7 @@ public:
     int intTimeOfLastAttack;//上次攻击的时间
 
     Tower(int Locationx=1,int Locationy=1,int AttackInterval=1000,
-              int Attack=10,int Cost=10,int Sizex=2,int Sizey=2,
+              int Attack=10,int Cost=10,int Sizex=1,int Sizey=1,
               double AttackRadius=5,int HitPoint=100):
               intAttackInterval(AttackInterval),intAttack(Attack),
               intCost(Cost),doubleAttackRadius(AttackRadius),
@@ -51,7 +53,7 @@ public:
 class Tower0 : public Tower
 {
 public:
-    Tower0(int Locationx=1,int Locationy=1):Tower(Locationx,Locationy,1000,10,10,2,2,5.0,100){ }//构造函数，初始化整个塔
+    Tower0(int Locationx=1,int Locationy=1):Tower(Locationx,Locationy,0,10,10,1,1,2.0,100){ }//构造函数，初始化整个塔
 };
 
 #endif // TOWER_H
