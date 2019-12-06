@@ -23,6 +23,12 @@ public:
     double move();
 
     bool hitHome();
+
+    double moneyobtain();
+
+    double doubleMoveDistance;
+
+    double doubleEarn;
 };
 
 #endif // MONSTER_H
