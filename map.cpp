@@ -30,15 +30,7 @@ Map::Map(int road[][2], int roadlength, int x, int y, int hairblood)
 
 void Map::ProduceMonster(int MonsterType = 0)
 {
-	switch (MonsterType)
-	{
-	case 0:
-		monsterExisted[intMonsterNumbers] = new Monster(100, 1, this); //0ºÅ¹Ö 100 1
-		break;
-
-	default:
-		break;
-	}
+	monsterExisted[intMonsterNumbers] = new Monster(MonsterType, this); //0ºÅ¹Ö 100 1
 	intMonsterNumbers++;
 }
 

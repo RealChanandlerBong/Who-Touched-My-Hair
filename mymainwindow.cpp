@@ -2,6 +2,7 @@
 #include "ui_mymainwindow.h"
 #include "helpdialog.h"
 #include <QTime>
+#include <QTimer>
 
 
 myMainWindow::myMainWindow(QWidget *parent)
@@ -20,7 +21,7 @@ myMainWindow::myMainWindow(QWidget *parent)
     this->recMonster = QRect(QPoint(200, 400), QPoint(600, 500));
 
     int roadLength = 45;
-    int roadLocation[45][2] = {
+    int roadLocation[45][2] = {   }; //待定
 
 	//QTimer
 	fTimer = new QTimer(this);
@@ -28,7 +29,7 @@ myMainWindow::myMainWindow(QWidget *parent)
 	fTimer->setInterval(100000);//总长100秒
 	connect(fTimer,SIGNAL(timeout()),this,SLOT(update()));
 
-    }; //待定
+ 
 
     Map myMap(30, 20, roadLocation, roadLength);
 
@@ -36,18 +37,6 @@ myMainWindow::myMainWindow(QWidget *parent)
 
 
 
-
-void myMainWindow::update()//5秒生成一个怪+每秒检查是否游戏失败
-{
-	QTime curTime = QTime::currentTime(); //获取当前时间
-		if (curTime.sec() % 5 == 0) {//每五秒
-			Map::ProduceMonster(0);//括号中可改为随机数
-		}
-		if (curTime.msec() % 1000 == 0) {//每秒
-			if(Map::update==False);
-				fTimer->stop();
-		}
-}
 
 
 
@@ -77,71 +66,26 @@ void myMainWindow::on_actionStart_triggered()
     chooseRole();
 }
 
-void myMainWindow::mousePressEvent(QMouseEvent *event)
+
+
+
+void myMainWindow::update()//5秒生成一个怪+每秒检查是否游戏失败
 {
-    //0表示刚打开窗口，游戏未初始化，
 
+  int remaintime = fTimer->remainingTime(); //获取当前时间
+  if(Map::Update(0)==False){
+      fTimer->stop();}
+      else{
 
-    //3表示处于游戏暂停
-    //4表示处于游戏结束
-    if(event->button() == Qt::LeftButton)
-    {
-        if(gameState == 1) //1表示处于选择角色界面
-        {
-            int x = event->globalX();
-            int y = event->globalY();
-            //可能位置坐标要改
-            if( x > recTower.topLeft().x() && x < (recTower.topLeft().x() + recTower.width())
-                    && y>recTower.topLeft().y() && y < (recTower.topLeft().y() + recTower.height()))
-            {
-                roleChoose = 0; //玩家为塔
-                gameState = 2; //游戏开始
-            }
-            else if(x > recMonster.topLeft().x() && x < (recMonster.topLeft().x() + recMonster.width())
-                    && y>recMonster.topLeft().y() && y < (recMonster.topLeft().y() + recMonster.height()))
-            {
-                roleChoose = 1;//玩家为怪
-                gameState = 2;
-            }
-            gameStart();
-        }
-        else if(gameState == 2) //2表示处于游戏进行界面
-        {
-            if(roleChoose == 0) //角色为塔
-                if(         //点到了商店某个塔
-                            //钱够
-                        )   //还有位置放塔
-                {
-                    ui->centralwidget->setMouseTracking(true);
-                    setMouseTracking(true); //激活整个窗体的鼠标追踪事件
+      if(remaintime%500==0){//0.5 second panduanyici
+          srand(remaintime);
+          if(remaintime/500%(rand()%3)==0)
+             myMap.ProduceMonster（0）;}
 
-                    towerType = 1; //举例
-                    if(enterLattice(event, ))
-                }
-                else if() //其它类似
-                {
+      }
 
-                }
-        }
-    }
 }
 
-void myMainWindow::mouseMoveEvent(QMouseEvent *event)
-{
-    if(gameState == 2)
-    {
-        int x =event->globalX();
-        int y = event->globalY();
-        /*QPoint pos = this->pos();
-        pos.setX();
-        pos.setY();*///根据鼠标移动位置进行跟踪贴图
-        if(towerCategory == 1)
-        {
-            //造个新塔
-        }
-        else if(towerCategory == 2)//类似
-    }
-}
 
 void myMainWindow::initial()
 {

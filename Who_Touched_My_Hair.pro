@@ -21,14 +21,20 @@ SOURCES += \
     map.cpp \
     monster.cpp \
     mymainwindow.cpp \
-    tower.cpp
+    tower.cpp \
+    tower.cpp \
+    monster.cpp \
+    map.cpp
 
 HEADERS += \
     helpdialog.h \
     map.h \
     monster.h \
     mymainwindow.h \
-    tower.h
+    tower.h \
+    tower.h \
+    monster.h \
+    map.h
 
 FORMS += \
     helpdialog.ui \

@@ -6,6 +6,9 @@
 #include "map.h"
 #include "monster.h"
 #include "tower.h"
+#include <QTime>
+#include <QTimer>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class myMainWindow; }
