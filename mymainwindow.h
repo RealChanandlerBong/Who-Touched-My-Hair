@@ -6,9 +6,6 @@
 #include "map.h"
 #include "monster.h"
 #include "tower.h"
-#include <QTime>
-#include <QTimer>
-
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class myMainWindow; }
@@ -30,12 +27,17 @@ public:
                              //4表示处于游戏结束
 
     int roleChoose; //用于表示玩家身份，0表示玩家扮演塔，1表示玩家扮演怪
-
+    int timeremain;//计时器设定时间
+    int gamelevel;//游戏难度
     //int originX, originY; //用于记录鼠标点击的位置，主要用于造塔时拖动用
 
     int towerType; //用于表示造塔的种类
 
     //Map myMap; 要不直接写进去，map类也作为monster和tower类的成员共用
+    
+    int mouseState;//标记游戏界面中鼠标的状态，1表示点击了商店的塔待建塔，0表示空闲，初始为0；
+
+    int precellx, precelly;//上一时刻鼠标所在格子坐标
 
     void mousePressEvent(QMouseEvent *);
 
