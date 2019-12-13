@@ -30,15 +30,7 @@ Map::Map(int road[][2], int roadlength, int x, int y, int hairblood)
 
 void Map::ProduceMonster(int MonsterType = 0)
 {
-	switch (MonsterType)
-	{
-	case 0:
-		monsterExisted[intMonsterNumbers] = new Monster(100, 1, this); //0ºÅ¹Ö 100 1
-		break;
-
-	default:
-		break;
-	}
+	monsterExisted[intMonsterNumbers] = new Monster(MonsterType, this); //0ºÅ¹Ö 100 1
 	intMonsterNumbers++;
 }
 
@@ -71,7 +63,7 @@ bool Map::MapisOccupied(int x, int y, int towersizex, int towersizey)
 {
 	for (int i = 0; i < towersizex; i++)
 		for (int j = 0; j < towersizey; j++)
-			if (MapState[i + x][j + y] != 0)
+			if (MapState[i + x][j + y] != 0 || MapState[i + x][j + y] != 2)
 				return false;
 	return true;//Î´±»Õ¼ÓÃ
 }

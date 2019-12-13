@@ -33,6 +33,10 @@ public:
     int towerType; //用于表示造塔的种类
 
     //Map myMap; 要不直接写进去，map类也作为monster和tower类的成员共用
+    
+    int mouseState;//标记游戏界面中鼠标的状态，1表示点击了商店的塔待建塔，0表示空闲，初始为0；
+
+    int precellx, precelly;//上一时刻鼠标所在格子坐标
 
     void mousePressEvent(QMouseEvent *);
 

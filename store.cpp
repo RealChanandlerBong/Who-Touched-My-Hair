@@ -1,5 +1,6 @@
 #include "store.h"
 #include "tower.h"
+#include "qpoint.h"
 
 store::store(QPoint store, int sX, int sY, QPoint tower, int inter, int tX, int tY, int avaNum)
 {
@@ -9,10 +10,9 @@ store::store(QPoint store, int sX, int sY, QPoint tower, int inter, int tX, int 
     interval = inter;
     towerX = tX; towerY = tY;
     avaTowerNum = avaNum;
-    avaTower = new Tower[ avaTowerNum ];
 }
 
-Tower* store::buyTower(QPoint mouse)
+int store::buyTower(QPoint mouse)
 {
     for (int i = 0; i < avaTowerNum; i++)
     {
@@ -20,24 +20,24 @@ Tower* store::buyTower(QPoint mouse)
         int iTowerX = towerUL.x() + i * (interval + towerX);
         int iTowerY = towerUL.y();
         //判断是否在第i个塔范围内
-        if ( (mouse.x() > iTowerX) && (mouse.x() < iTowerX + towerX) && (mouse.y() > iTowerY) 
-        && (mouse.y() < iTowerY + towerY)
-        {
-            return &(avaTower[i]);
-        }
+        if ( (mouse.x() > iTowerX) && (mouse.x() < iTowerX + towerX)
+            && (mouse.y() > iTowerY) && (mouse.y() < iTowerY + towerY))
+            return i;
     }
+    return -1;
 }
 
-bool store::isAfford(Tower* buy, int gold)
+bool store::isAfford(int towerType, int gold)
 {
-    if (buy->intCost > gold)
+    if(towerType != -1)
     {
-        return 0;
+        Tower* towerTemp=new Tower((towerType, 0, 0));
+        int r = (towerTemp->intCost > gold);
+        delete towerTemp;
+        return r;
     }
-    return 1;
+    else return 0;
 }
 
-store::~store()
-{
-    delete[] avaTower;
-}
+
+store::~store() {}

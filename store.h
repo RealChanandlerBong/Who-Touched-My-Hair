@@ -2,6 +2,7 @@
 #define STORE_H
 
 #include "tower.h"
+#include "qpoint.h"
 
 class store
 {
@@ -12,11 +13,10 @@ private:
     int interval;   //商店内塔之间的间隔
     int towerX, towerY; //商店内塔的长宽
     int avaTowerNum;    //商店内可用塔数目
-    Tower *avaTower;  //商店内可用塔
 public:
     store(QPoint store, int sX, int sY, QPoint tower, int inter, int tX, int tY, int avaNum);
-    Tower* buyTower(QPoint mouse);  //判断买什么塔
-    bool isAfford(Tower* buy, int gold);   //判断是否能买上
+    int buyTower(QPoint mouse);  //判断买什么塔
+    bool isAfford(int towerType, int gold);   //判断是否能买上
     ~store();
 };
 
