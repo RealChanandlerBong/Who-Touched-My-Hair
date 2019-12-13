@@ -6,7 +6,11 @@
 #include "store.h"
 #include "map.h"
 #include <QTime>
+<<<<<<< HEAD
 #include <QMouseEvent>
+=======
+#include <QTimer>
+>>>>>>> e2fb4b3b5da3512680c537455419e0736af615d6
 
 
 myMainWindow::myMainWindow(QWidget *parent)
@@ -28,7 +32,7 @@ myMainWindow::myMainWindow(QWidget *parent)
     this->recMonster = QRect(QPoint(200, 400), QPoint(600, 500));
 
     int roadLength = 45;
-    int roadLocation[45][2] = {
+    int roadLocation[45][2] = {   }; //待定
 
 	//QTimer
 	fTimer = new QTimer(this);
@@ -36,7 +40,7 @@ myMainWindow::myMainWindow(QWidget *parent)
 	fTimer->setInterval(100000);//总长100秒
 	connect(fTimer,SIGNAL(timeout()),this,SLOT(update()));
 
-    }; //待定
+ 
 
     Map myMap(30, 20, roadLocation, roadLength);
 
@@ -44,18 +48,6 @@ myMainWindow::myMainWindow(QWidget *parent)
 
 
 
-
-void myMainWindow::update()//5秒生成一个怪+每秒检查是否游戏失败
-{
-	QTime curTime = QTime::currentTime(); //获取当前时间
-		if (curTime.sec() % 5 == 0) {//每五秒
-			Map::ProduceMonster(0);//括号中可改为随机数
-		}
-		if (curTime.msec() % 1000 == 0) {//每秒
-			if(Map::update==False);
-				fTimer->stop();
-		}
-}
 
 
 
@@ -85,6 +77,7 @@ void myMainWindow::on_actionStart_triggered()
     chooseRole();
 }
 
+<<<<<<< HEAD
 void myMainWindow::mousePressEvent(QMouseEvent *event)
 {//改动：store.cpp后两个函数，
         //map.cpp中MapIsOccupied()占用条件，
@@ -194,6 +187,29 @@ void myMainWindow::mouseMoveEvent(QMouseEvent *event)
         }
     }
 }
+=======
+
+
+
+void myMainWindow::update()//5秒生成一个怪+每秒检查是否游戏失败
+{
+
+  int remaintime = fTimer->remainingTime(); //获取当前时间
+  if(Map::Update(0)==False){
+      fTimer->stop();}
+      else{
+
+      if(remaintime%500==0){//0.5 second panduanyici
+          srand(remaintime);
+          if(remaintime/500%(rand()%3)==0)
+             myMap.ProduceMonster（0）;}
+
+      }
+
+}
+
+
+>>>>>>> e2fb4b3b5da3512680c537455419e0736af615d6
 void myMainWindow::initial()
 {
 
